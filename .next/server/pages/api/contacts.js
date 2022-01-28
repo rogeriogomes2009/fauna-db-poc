@@ -1,56 +1,154 @@
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = require('../../ssr-module-cache.js');
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./pages/api/contacts.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./pages/api/contacts.js":
+/*!*******************************!*\
+  !*** ./pages/api/contacts.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
-/*
- * ATTENTION: An "eval-source-map" devtool has been used.
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-(() => {
-var exports = {};
-exports.id = "pages/api/contacts";
-exports.ids = ["pages/api/contacts"];
-exports.modules = {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return handler; });
+/* harmony import */ var _utils_db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/db */ "./utils/db.js");
+
+
+const getAllContacts = () => {
+  return _utils_db__WEBPACK_IMPORTED_MODULE_0__["client"].query(_utils_db__WEBPACK_IMPORTED_MODULE_0__["q"].Map(_utils_db__WEBPACK_IMPORTED_MODULE_0__["q"].Paginate(_utils_db__WEBPACK_IMPORTED_MODULE_0__["q"].Match('allContacts'), {
+    size: 1
+  }), _utils_db__WEBPACK_IMPORTED_MODULE_0__["q"].Lambda(x => _utils_db__WEBPACK_IMPORTED_MODULE_0__["q"].Get(x))));
+};
+
+async function handler(req, res) {
+  const contacts = await getAllContacts();
+  res.json(contacts);
+}
+
+/***/ }),
+
+/***/ "./utils/db.js":
+/*!*********************!*\
+  !*** ./utils/db.js ***!
+  \*********************/
+/*! exports provided: q, client */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return q; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "client", function() { return client; });
+const faunadb = __webpack_require__(/*! faunadb */ "faunadb");
+
+const q = faunadb.query;
+const client = new faunadb.Client({
+  secret: 'fnAEd6hxlfACT0t2cF19Tq6cZY6ciQSJQ-sANytc'
+});
+
+/***/ }),
 
 /***/ "faunadb":
 /*!**************************!*\
   !*** external "faunadb" ***!
   \**************************/
-/***/ ((module) => {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 module.exports = require("faunadb");
 
-/***/ }),
-
-/***/ "(api)/./pages/api/contacts.js":
-/*!*******************************!*\
-  !*** ./pages/api/contacts.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ handler)\n/* harmony export */ });\n/* harmony import */ var _utils_db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/db */ \"(api)/./utils/db.js\");\n\nconst getAllContacts = ()=>{\n    return _utils_db__WEBPACK_IMPORTED_MODULE_0__.client.query(_utils_db__WEBPACK_IMPORTED_MODULE_0__.q.Map(_utils_db__WEBPACK_IMPORTED_MODULE_0__.q.Paginate(_utils_db__WEBPACK_IMPORTED_MODULE_0__.q.Match('allContacts'), {\n        size: 2\n    }), _utils_db__WEBPACK_IMPORTED_MODULE_0__.q.Lambda((x)=>_utils_db__WEBPACK_IMPORTED_MODULE_0__.q.Get(x)\n    )));\n};\nasync function handler(req, res) {\n    const contacts = await getAllContacts();\n    res.json(contacts);\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvY29udGFjdHMuanMuanMiLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBMEM7QUFFMUMsS0FBSyxDQUFDRSxjQUFjLE9BQVMsQ0FBQztJQUM1QixNQUFNLENBQUNELG1EQUFZLENBQ2pCRCw0Q0FBSyxDQUNMQSxpREFBVSxDQUNWQSw4Q0FBTyxDQUFDLENBQWEsZUFDbkIsQ0FBQztRQUFDTyxJQUFJLEVBQUUsQ0FBQztJQUFDLENBQUMsR0FFYlAsK0NBQVEsRUFBQ1MsQ0FBQyxHQUFJVCw0Q0FBSyxDQUFDUyxDQUFDOztBQUd6QixDQUFDO0FBRWMsZUFBZUUsT0FBTyxDQUFDQyxHQUFHLEVBQUVDLEdBQUcsRUFBRSxDQUFDO0lBQy9DLEtBQUssQ0FBQ0MsUUFBUSxHQUFHLEtBQUssQ0FBQ1osY0FBYztJQUNyQ1csR0FBRyxDQUFDRSxJQUFJLENBQUNELFFBQVE7QUFDbkIsQ0FBQyIsInNvdXJjZXMiOlsid2VicGFjazovL2ZhdW5hLWRiLXBvYy8uL3BhZ2VzL2FwaS9jb250YWN0cy5qcz80MTBjIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHEsIGNsaWVudCB9IGZyb20gJy4uLy4uL3V0aWxzL2RiJ1xyXG5cclxuY29uc3QgZ2V0QWxsQ29udGFjdHMgPSAoKSA9PiB7XHJcbiAgcmV0dXJuIGNsaWVudC5xdWVyeShcclxuICAgIHEuTWFwKFxyXG4gICAgcS5QYWdpbmF0ZShcclxuICAgIHEuTWF0Y2goJ2FsbENvbnRhY3RzJyksXHJcbiAgICAgIHsgc2l6ZTogMiB9XHJcbiAgICAgKSxcclxuICAgIHEuTGFtYmRhKHggPT4gcS5HZXQoeCkpXHJcbiAgIClcclxuIClcclxufVxyXG5cclxuZXhwb3J0IGRlZmF1bHQgYXN5bmMgZnVuY3Rpb24gaGFuZGxlcihyZXEsIHJlcykge1xyXG4gIGNvbnN0IGNvbnRhY3RzID0gYXdhaXQgZ2V0QWxsQ29udGFjdHMoKVxyXG4gIHJlcy5qc29uKGNvbnRhY3RzKVxyXG59Il0sIm5hbWVzIjpbInEiLCJjbGllbnQiLCJnZXRBbGxDb250YWN0cyIsInF1ZXJ5IiwiTWFwIiwiUGFnaW5hdGUiLCJNYXRjaCIsInNpemUiLCJMYW1iZGEiLCJ4IiwiR2V0IiwiaGFuZGxlciIsInJlcSIsInJlcyIsImNvbnRhY3RzIiwianNvbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(api)/./pages/api/contacts.js\n");
-
-/***/ }),
-
-/***/ "(api)/./utils/db.js":
-/*!*********************!*\
-  !*** ./utils/db.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"q\": () => (/* binding */ q),\n/* harmony export */   \"client\": () => (/* binding */ client)\n/* harmony export */ });\nconst faunadb = __webpack_require__(/*! faunadb */ \"faunadb\");\nconst q = faunadb.query;\nconst client = new faunadb.Client({\n    secret: 'fnAEd6hxlfACT0t2cF19Tq6cZY6ciQSJQ-sANytc'\n});\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi91dGlscy9kYi5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBLEtBQUssQ0FBQ0EsT0FBTyxHQUFHQyxtQkFBTyxDQUFDLHdCQUFTO0FBQzFCLEtBQUssQ0FBQ0MsQ0FBQyxHQUFHRixPQUFPLENBQUNHLEtBQUs7QUFFdkIsS0FBSyxDQUFDQyxNQUFNLEdBQUcsR0FBRyxDQUFDSixPQUFPLENBQUNLLE1BQU0sQ0FBQyxDQUFDO0lBQ3hDQyxNQUFNLEVBQUUsQ0FBMEM7QUFDcEQsQ0FBQyIsInNvdXJjZXMiOlsid2VicGFjazovL2ZhdW5hLWRiLXBvYy8uL3V0aWxzL2RiLmpzPzdjYjIiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgZmF1bmFkYiA9IHJlcXVpcmUoJ2ZhdW5hZGInKVxyXG5leHBvcnQgY29uc3QgcSA9IGZhdW5hZGIucXVlcnlcclxuXHJcbmV4cG9ydCBjb25zdCBjbGllbnQgPSBuZXcgZmF1bmFkYi5DbGllbnQoe1xyXG4gIHNlY3JldDogJ2ZuQUVkNmh4bGZBQ1QwdDJjRjE5VHE2Y1pZNmNpUVNKUS1zQU55dGMnXHJcbn0pIl0sIm5hbWVzIjpbImZhdW5hZGIiLCJyZXF1aXJlIiwicSIsInF1ZXJ5IiwiY2xpZW50IiwiQ2xpZW50Iiwic2VjcmV0Il0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(api)/./utils/db.js\n");
-
 /***/ })
 
-};
-;
-
-// load runtime
-var __webpack_require__ = require("../../webpack-api-runtime.js");
-__webpack_require__.C(exports);
-var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/contacts.js"));
-module.exports = __webpack_exports__;
-
-})();
+/******/ });
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vd2VicGFjay9ib290c3RyYXAiLCJ3ZWJwYWNrOi8vLy4vcGFnZXMvYXBpL2NvbnRhY3RzLmpzIiwid2VicGFjazovLy8uL3V0aWxzL2RiLmpzIiwid2VicGFjazovLy9leHRlcm5hbCBcImZhdW5hZGJcIiJdLCJuYW1lcyI6WyJnZXRBbGxDb250YWN0cyIsImNsaWVudCIsInF1ZXJ5IiwicSIsIk1hcCIsIlBhZ2luYXRlIiwiTWF0Y2giLCJzaXplIiwiTGFtYmRhIiwieCIsIkdldCIsImhhbmRsZXIiLCJyZXEiLCJyZXMiLCJjb250YWN0cyIsImpzb24iLCJmYXVuYWRiIiwicmVxdWlyZSIsIkNsaWVudCIsInNlY3JldCJdLCJtYXBwaW5ncyI6Ijs7UUFBQTtRQUNBOztRQUVBO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBLElBQUk7UUFDSjtRQUNBOztRQUVBO1FBQ0E7O1FBRUE7UUFDQTtRQUNBOzs7UUFHQTtRQUNBOztRQUVBO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0EsMENBQTBDLGdDQUFnQztRQUMxRTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBLHdEQUF3RCxrQkFBa0I7UUFDMUU7UUFDQSxpREFBaUQsY0FBYztRQUMvRDs7UUFFQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0EseUNBQXlDLGlDQUFpQztRQUMxRSxnSEFBZ0gsbUJBQW1CLEVBQUU7UUFDckk7UUFDQTs7UUFFQTtRQUNBO1FBQ0E7UUFDQSwyQkFBMkIsMEJBQTBCLEVBQUU7UUFDdkQsaUNBQWlDLGVBQWU7UUFDaEQ7UUFDQTtRQUNBOztRQUVBO1FBQ0Esc0RBQXNELCtEQUErRDs7UUFFckg7UUFDQTs7O1FBR0E7UUFDQTs7Ozs7Ozs7Ozs7OztBQ3hGQTtBQUFBO0FBQUE7QUFBQTs7QUFFQSxNQUFNQSxjQUFjLEdBQUcsTUFBTTtBQUMzQixTQUFPQyxnREFBTSxDQUFDQyxLQUFQLENBQ0xDLDJDQUFDLENBQUNDLEdBQUYsQ0FDQUQsMkNBQUMsQ0FBQ0UsUUFBRixDQUNBRiwyQ0FBQyxDQUFDRyxLQUFGLENBQVEsYUFBUixDQURBLEVBRUU7QUFBRUMsUUFBSSxFQUFFO0FBQVIsR0FGRixDQURBLEVBS0FKLDJDQUFDLENBQUNLLE1BQUYsQ0FBU0MsQ0FBQyxJQUFJTiwyQ0FBQyxDQUFDTyxHQUFGLENBQU1ELENBQU4sQ0FBZCxDQUxBLENBREssQ0FBUDtBQVNELENBVkQ7O0FBWWUsZUFBZUUsT0FBZixDQUF1QkMsR0FBdkIsRUFBNEJDLEdBQTVCLEVBQWlDO0FBQzlDLFFBQU1DLFFBQVEsR0FBRyxNQUFNZCxjQUFjLEVBQXJDO0FBQ0FhLEtBQUcsQ0FBQ0UsSUFBSixDQUFTRCxRQUFUO0FBQ0QsQzs7Ozs7Ozs7Ozs7O0FDakJEO0FBQUE7QUFBQTtBQUFBLE1BQU1FLE9BQU8sR0FBR0MsbUJBQU8sQ0FBQyx3QkFBRCxDQUF2Qjs7QUFDTyxNQUFNZCxDQUFDLEdBQUdhLE9BQU8sQ0FBQ2QsS0FBbEI7QUFFQSxNQUFNRCxNQUFNLEdBQUcsSUFBSWUsT0FBTyxDQUFDRSxNQUFaLENBQW1CO0FBQ3ZDQyxRQUFNLEVBQUU7QUFEK0IsQ0FBbkIsQ0FBZixDOzs7Ozs7Ozs7OztBQ0hQLG9DIiwiZmlsZSI6InBhZ2VzL2FwaS9jb250YWN0cy5qcyIsInNvdXJjZXNDb250ZW50IjpbIiBcdC8vIFRoZSBtb2R1bGUgY2FjaGVcbiBcdHZhciBpbnN0YWxsZWRNb2R1bGVzID0gcmVxdWlyZSgnLi4vLi4vc3NyLW1vZHVsZS1jYWNoZS5qcycpO1xuXG4gXHQvLyBUaGUgcmVxdWlyZSBmdW5jdGlvblxuIFx0ZnVuY3Rpb24gX193ZWJwYWNrX3JlcXVpcmVfXyhtb2R1bGVJZCkge1xuXG4gXHRcdC8vIENoZWNrIGlmIG1vZHVsZSBpcyBpbiBjYWNoZVxuIFx0XHRpZihpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSkge1xuIFx0XHRcdHJldHVybiBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXS5leHBvcnRzO1xuIFx0XHR9XG4gXHRcdC8vIENyZWF0ZSBhIG5ldyBtb2R1bGUgKGFuZCBwdXQgaXQgaW50byB0aGUgY2FjaGUpXG4gXHRcdHZhciBtb2R1bGUgPSBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXSA9IHtcbiBcdFx0XHRpOiBtb2R1bGVJZCxcbiBcdFx0XHRsOiBmYWxzZSxcbiBcdFx0XHRleHBvcnRzOiB7fVxuIFx0XHR9O1xuXG4gXHRcdC8vIEV4ZWN1dGUgdGhlIG1vZHVsZSBmdW5jdGlvblxuIFx0XHR2YXIgdGhyZXcgPSB0cnVlO1xuIFx0XHR0cnkge1xuIFx0XHRcdG1vZHVsZXNbbW9kdWxlSWRdLmNhbGwobW9kdWxlLmV4cG9ydHMsIG1vZHVsZSwgbW9kdWxlLmV4cG9ydHMsIF9fd2VicGFja19yZXF1aXJlX18pO1xuIFx0XHRcdHRocmV3ID0gZmFsc2U7XG4gXHRcdH0gZmluYWxseSB7XG4gXHRcdFx0aWYodGhyZXcpIGRlbGV0ZSBpbnN0YWxsZWRNb2R1bGVzW21vZHVsZUlkXTtcbiBcdFx0fVxuXG4gXHRcdC8vIEZsYWcgdGhlIG1vZHVsZSBhcyBsb2FkZWRcbiBcdFx0bW9kdWxlLmwgPSB0cnVlO1xuXG4gXHRcdC8vIFJldHVybiB0aGUgZXhwb3J0cyBvZiB0aGUgbW9kdWxlXG4gXHRcdHJldHVybiBtb2R1bGUuZXhwb3J0cztcbiBcdH1cblxuXG4gXHQvLyBleHBvc2UgdGhlIG1vZHVsZXMgb2JqZWN0IChfX3dlYnBhY2tfbW9kdWxlc19fKVxuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5tID0gbW9kdWxlcztcblxuIFx0Ly8gZXhwb3NlIHRoZSBtb2R1bGUgY2FjaGVcbiBcdF9fd2VicGFja19yZXF1aXJlX18uYyA9IGluc3RhbGxlZE1vZHVsZXM7XG5cbiBcdC8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb24gZm9yIGhhcm1vbnkgZXhwb3J0c1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5kID0gZnVuY3Rpb24oZXhwb3J0cywgbmFtZSwgZ2V0dGVyKSB7XG4gXHRcdGlmKCFfX3dlYnBhY2tfcmVxdWlyZV9fLm8oZXhwb3J0cywgbmFtZSkpIHtcbiBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgbmFtZSwgeyBlbnVtZXJhYmxlOiB0cnVlLCBnZXQ6IGdldHRlciB9KTtcbiBcdFx0fVxuIFx0fTtcblxuIFx0Ly8gZGVmaW5lIF9fZXNNb2R1bGUgb24gZXhwb3J0c1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5yID0gZnVuY3Rpb24oZXhwb3J0cykge1xuIFx0XHRpZih0eXBlb2YgU3ltYm9sICE9PSAndW5kZWZpbmVkJyAmJiBTeW1ib2wudG9TdHJpbmdUYWcpIHtcbiBcdFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgU3ltYm9sLnRvU3RyaW5nVGFnLCB7IHZhbHVlOiAnTW9kdWxlJyB9KTtcbiBcdFx0fVxuIFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgJ19fZXNNb2R1bGUnLCB7IHZhbHVlOiB0cnVlIH0pO1xuIFx0fTtcblxuIFx0Ly8gY3JlYXRlIGEgZmFrZSBuYW1lc3BhY2Ugb2JqZWN0XG4gXHQvLyBtb2RlICYgMTogdmFsdWUgaXMgYSBtb2R1bGUgaWQsIHJlcXVpcmUgaXRcbiBcdC8vIG1vZGUgJiAyOiBtZXJnZSBhbGwgcHJvcGVydGllcyBvZiB2YWx1ZSBpbnRvIHRoZSBuc1xuIFx0Ly8gbW9kZSAmIDQ6IHJldHVybiB2YWx1ZSB3aGVuIGFscmVhZHkgbnMgb2JqZWN0XG4gXHQvLyBtb2RlICYgOHwxOiBiZWhhdmUgbGlrZSByZXF1aXJlXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnQgPSBmdW5jdGlvbih2YWx1ZSwgbW9kZSkge1xuIFx0XHRpZihtb2RlICYgMSkgdmFsdWUgPSBfX3dlYnBhY2tfcmVxdWlyZV9fKHZhbHVlKTtcbiBcdFx0aWYobW9kZSAmIDgpIHJldHVybiB2YWx1ZTtcbiBcdFx0aWYoKG1vZGUgJiA0KSAmJiB0eXBlb2YgdmFsdWUgPT09ICdvYmplY3QnICYmIHZhbHVlICYmIHZhbHVlLl9fZXNNb2R1bGUpIHJldHVybiB2YWx1ZTtcbiBcdFx0dmFyIG5zID0gT2JqZWN0LmNyZWF0ZShudWxsKTtcbiBcdFx0X193ZWJwYWNrX3JlcXVpcmVfXy5yKG5zKTtcbiBcdFx0T2JqZWN0LmRlZmluZVByb3BlcnR5KG5zLCAnZGVmYXVsdCcsIHsgZW51bWVyYWJsZTogdHJ1ZSwgdmFsdWU6IHZhbHVlIH0pO1xuIFx0XHRpZihtb2RlICYgMiAmJiB0eXBlb2YgdmFsdWUgIT0gJ3N0cmluZycpIGZvcih2YXIga2V5IGluIHZhbHVlKSBfX3dlYnBhY2tfcmVxdWlyZV9fLmQobnMsIGtleSwgZnVuY3Rpb24oa2V5KSB7IHJldHVybiB2YWx1ZVtrZXldOyB9LmJpbmQobnVsbCwga2V5KSk7XG4gXHRcdHJldHVybiBucztcbiBcdH07XG5cbiBcdC8vIGdldERlZmF1bHRFeHBvcnQgZnVuY3Rpb24gZm9yIGNvbXBhdGliaWxpdHkgd2l0aCBub24taGFybW9ueSBtb2R1bGVzXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm4gPSBmdW5jdGlvbihtb2R1bGUpIHtcbiBcdFx0dmFyIGdldHRlciA9IG1vZHVsZSAmJiBtb2R1bGUuX19lc01vZHVsZSA/XG4gXHRcdFx0ZnVuY3Rpb24gZ2V0RGVmYXVsdCgpIHsgcmV0dXJuIG1vZHVsZVsnZGVmYXVsdCddOyB9IDpcbiBcdFx0XHRmdW5jdGlvbiBnZXRNb2R1bGVFeHBvcnRzKCkgeyByZXR1cm4gbW9kdWxlOyB9O1xuIFx0XHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQoZ2V0dGVyLCAnYScsIGdldHRlcik7XG4gXHRcdHJldHVybiBnZXR0ZXI7XG4gXHR9O1xuXG4gXHQvLyBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGxcbiBcdF9fd2VicGFja19yZXF1aXJlX18ubyA9IGZ1bmN0aW9uKG9iamVjdCwgcHJvcGVydHkpIHsgcmV0dXJuIE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChvYmplY3QsIHByb3BlcnR5KTsgfTtcblxuIFx0Ly8gX193ZWJwYWNrX3B1YmxpY19wYXRoX19cbiBcdF9fd2VicGFja19yZXF1aXJlX18ucCA9IFwiXCI7XG5cblxuIFx0Ly8gTG9hZCBlbnRyeSBtb2R1bGUgYW5kIHJldHVybiBleHBvcnRzXG4gXHRyZXR1cm4gX193ZWJwYWNrX3JlcXVpcmVfXyhfX3dlYnBhY2tfcmVxdWlyZV9fLnMgPSBcIi4vcGFnZXMvYXBpL2NvbnRhY3RzLmpzXCIpO1xuIiwiaW1wb3J0IHsgcSwgY2xpZW50IH0gZnJvbSAnLi4vLi4vdXRpbHMvZGInXHJcblxyXG5jb25zdCBnZXRBbGxDb250YWN0cyA9ICgpID0+IHtcclxuICByZXR1cm4gY2xpZW50LnF1ZXJ5KFxyXG4gICAgcS5NYXAoXHJcbiAgICBxLlBhZ2luYXRlKFxyXG4gICAgcS5NYXRjaCgnYWxsQ29udGFjdHMnKSxcclxuICAgICAgeyBzaXplOiAxIH1cclxuICAgICApLFxyXG4gICAgcS5MYW1iZGEoeCA9PiBxLkdldCh4KSlcclxuICAgKVxyXG4gKVxyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBhc3luYyBmdW5jdGlvbiBoYW5kbGVyKHJlcSwgcmVzKSB7XHJcbiAgY29uc3QgY29udGFjdHMgPSBhd2FpdCBnZXRBbGxDb250YWN0cygpXHJcbiAgcmVzLmpzb24oY29udGFjdHMpXHJcbn0iLCJjb25zdCBmYXVuYWRiID0gcmVxdWlyZSgnZmF1bmFkYicpXHJcbmV4cG9ydCBjb25zdCBxID0gZmF1bmFkYi5xdWVyeVxyXG5cclxuZXhwb3J0IGNvbnN0IGNsaWVudCA9IG5ldyBmYXVuYWRiLkNsaWVudCh7XHJcbiAgc2VjcmV0OiAnZm5BRWQ2aHhsZkFDVDB0MmNGMTlUcTZjWlk2Y2lRU0pRLXNBTnl0YydcclxufSkiLCJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJmYXVuYWRiXCIpOyJdLCJzb3VyY2VSb290IjoiIn0=
