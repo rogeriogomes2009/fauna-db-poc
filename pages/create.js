@@ -1,5 +1,5 @@
-
 import {useFormik} from "formik"
+import {Router, useRouter} from 'next/router'
 
 const post = async(url, data) => {
   const res = await fetch(url, {
@@ -15,6 +15,7 @@ const post = async(url, data) => {
 }
 
 const Create = () => {
+  const router = useRouter()
   const form = useFormik ({
     initialValues:{
       name:'',
@@ -24,6 +25,7 @@ const Create = () => {
     onSubmit: async (values) => {
       const ret = await post('/api/contacts', values)
       console.log(ret)
+      router.push('/')
       //console.log(values)
     }
   })

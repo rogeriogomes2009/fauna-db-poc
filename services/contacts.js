@@ -15,3 +15,7 @@ export const getAllContacts = () => {
 export const createContact = data => {
   return client.query(q.Create(q.Collection('contacts'),{ data }))
 }
+
+export const deleteContact = (ref) => {
+  return client.query(q.Delete(q.Ref(q.Collection('contacts'), ref )))
+}
