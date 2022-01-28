@@ -1,12 +1,10 @@
 import useSWR from "swr"
 
 const Index = () => {
-
   const {data} = useSWR('/api/contacts')
   if(!data){
     return <p>Loading...</p>
   }
-
   return(
     <div>
       <h1>Testando FAUNA-DB</h1>
@@ -15,7 +13,7 @@ const Index = () => {
   return (
     <div key={contact.ref['@ref'].id}>
 
-    {contact.data.name} - {contact.data.email}
+{contact.ref['@ref'].id} / {contact.data.name} - {contact.data.email}
     <br/>
     <hr/>
     </div>
