@@ -30,7 +30,7 @@ const getAllContacts = () => {
     q.Map(
     q.Paginate(
     q.Match('allContacts'),
-      { size: 2 }
+      { size: 1 }
      ),
     q.Lambda(x => q.Get(x))
    )

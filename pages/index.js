@@ -13,11 +13,12 @@ const Index = () => {
 
 {data.data.map((contact) => {
   return (
-    <>
+    <div key={contact.ref['@ref'].id}>
+
     {contact.data.name} - {contact.data.email}
     <br/>
     <hr/>
-    </>
+    </div>
   )
 }
 )
